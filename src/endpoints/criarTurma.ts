@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import connection from "../dados/connection"
 import { IdGenerator } from "../servicos/IdGenerator"
-import { Turma } from "../Turma/turma"
+import { Turma } from "../classes/classeTurma"
 
 export const createTurma = async (req: Request, res: Response): Promise<void> => {
 

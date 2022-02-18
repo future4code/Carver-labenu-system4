@@ -3,7 +3,7 @@ import { Request, Response } from "express"
 import connection from "../dados/connection"
 import { getDocenteId } from "../requisicoes/getDocentes";
 import { getEstudantesId } from "../requisicoes/getEstudantesId"
-import { Turma } from "../Turma/turma";
+import { Turma } from "../classes/classeTurma";
 
 
 export const GetTurma = async (req: Request, res: Response): Promise<void> => {
