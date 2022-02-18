@@ -1,4 +1,5 @@
 import connection from "../dados/connection"
+import { retornarIdade } from "../funcoes/retornarIdade"
 import { estudante } from "../interfaces/estudante"
 import { getHobbyById } from "./getHobbyById"
 
@@ -24,6 +25,7 @@ export const getEstudantePorNome = async (aluno: string): Promise<estudante[]> =
                 nome: item.nome,
                 email: item.email,
                 data_nasc: dataFormatada(item.data_nasc),
+                idade: `${retornarIdade(dataFormatada(item.data_nasc))} anos`,
                 turma_id: item.turma_id,
                 hobby: item.hobby
             })

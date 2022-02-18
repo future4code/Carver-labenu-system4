@@ -7,11 +7,17 @@ import { getHobbyById } from '../requisicoes/getHobbyById'
 
 
 export const getStudents = async (req: Request, res: Response): Promise<void>=> {
+
+    
+
     let errorCode: number = 400
     const search = req.query.search as string
+    
+
 
     try {
 
+        
         if (search) {
             const estudante = await getEstudantePorNome(search)
 
