@@ -5,11 +5,11 @@ import dotenv from "dotenv"
 
 dotenv.config()
 
-const app: Express = express();
+export const app: Express = express();
 app.use(express.json())
 app.use(cors())
 
-const server = app.listen(process.env.PORT || 3003, () => {
+const server = app.listen(process.env.PORT || 3006, () => {
     if (server) {
         const address = server.address() as AddressInfo;
         console.log(`Server is running in http://localhost: ${address.port}`)
