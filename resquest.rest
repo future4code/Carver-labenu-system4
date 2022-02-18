@@ -1,0 +1,3 @@
+
+GET  http://localhost:3006/turma/all
+Content-Type: application/json

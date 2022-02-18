@@ -1,8 +1,9 @@
-export interface estudante{
+export interface docente{
     id: string,
     nome: string,
     email?: string,
     data_nasc?: string,
     turma_id?: string,
-    hobby?: string[]
+    especialidade?: string[]
+
 }
