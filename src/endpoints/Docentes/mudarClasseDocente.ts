@@ -1,7 +1,7 @@
-import connection from "../dados/connection";
 import { Request, Response } from 'express'
+import connection from '../../dados/connection'
 
-export const chageClassStudent = async (req: Request, res: Response): Promise<void> => {
+export const mudarClasseDocente = async (req: Request, res: Response): Promise<void> => {
     const token = req.headers.authorization
     const id = req.params.id
     const turma_id: string = req.body.turma_id
@@ -15,7 +15,7 @@ export const chageClassStudent = async (req: Request, res: Response): Promise<vo
 
         if (!turma_id) {
             errorCode = 404
-            throw new Error("Para alterar a turma de um estudante é necessário informar o id da nova turma.")
+            throw new Error("Para alterar a turma de um docente é necessário informar o id da nova turma.")
         }
 
         const buscarTurma = await connection('Turma')
@@ -27,17 +27,17 @@ export const chageClassStudent = async (req: Request, res: Response): Promise<vo
             throw new Error("Turma não encontrada, por gentileza informar uma turma_id válido")
         }
 
-        const buscarAluno = await connection('Estudante')
+        const buscarDocente = await connection('Docente')
             .select()
             .update({ turma_id: turma_id })
-            .where('Estudante.id', `${id}`)
+            .where('Docente.id', `${id}`)
 
-        if (!buscarAluno) {
+        if (!buscarDocente) {
             errorCode = 404
-            throw new Error("Estudante não encontrado, por gentileza informar um id válido")
+            throw new Error("Docente não encontrado, por gentileza informar um id válido")
         }
 
-        res.status(200).send("Turma alterada com sucesso!")
+        res.status(200).send()
 
     } catch (error: any) {
         res.status(errorCode).send({ message: error.message || error.sqlMessage })

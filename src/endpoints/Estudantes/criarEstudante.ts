@@ -1,10 +1,9 @@
 import { Request, Response } from 'express'
-import conneection from "../dados/connection"
-import { Estudante } from "../classes/classeEstudante";
-import { getHobby } from '../requisicoes/getHobby';
+import { Estudante } from '../../classes/classeEstudante'
+import connection from '../../dados/connection'
+import { pegarHobbyPorNome } from '../../requisicoes/Estudante/pegarHobbyPorNome'
 
-
-export const createStudent = async (req: Request, res: Response): Promise<void> => {
+export const criarEstudante = async (req: Request, res: Response): Promise<void> => {
     let errorCode: number = 400
     const token = req.headers.authorization
 
@@ -23,15 +22,20 @@ export const createStudent = async (req: Request, res: Response): Promise<void> 
 
         if (!nome || !email || !data_nasc || !hobby) {
             errorCode = 404
-            throw new Error("Para realizar o cadastro de um novo produto é necessário informar os seguintes campos: name, email, data_nasc, hobby.")
+            throw new Error("Para realizar o cadastro de um novo estudante é necessário informar os seguintes campos: nome, email, data_nasc, hobby.")
+        }
+
+        if (!email.includes('@') || !email.includes('.com')) {
+            errorCode = 422;
+            throw new Error("Formato de email inválido");
         }
 
         for (let i = 0; i < hobby.length; i++) {
 
-            const hobbys = await getHobby(hobby[i])
+            const hobbys = await pegarHobbyPorNome(hobby[i])
 
             if (hobbys.length < 1) {
-                await conneection('Hobby')
+                await connection('Hobby')
                     .insert({
                         id: Date.now().toString(),
                         nome: hobby[i]
@@ -39,7 +43,7 @@ export const createStudent = async (req: Request, res: Response): Promise<void> 
             }
         }
 
-        await conneection('Estudante')
+        await connection('Estudante')
             .insert({
                 id,
                 nome: estudante.getNome(),
@@ -50,9 +54,9 @@ export const createStudent = async (req: Request, res: Response): Promise<void> 
 
             for(let j = 0; j < hobby.length; j++){
 
-                const hobbys2 = await getHobby(hobby[j])
+                const hobbys2 = await pegarHobbyPorNome(hobby[j])
 
-                await conneection('Estudante_Hobby')
+                await connection('Estudante_Hobby')
                     .insert({
                         id: Date.now().toString(),
                         estudante_id: estudante.getId(),
@@ -66,3 +70,5 @@ export const createStudent = async (req: Request, res: Response): Promise<void> 
         res.status(errorCode).send({ message: error.message || error.sqlMessage })
     }
 }
+
+

@@ -44,4 +44,5 @@ export class Usuario {
         return `${newDate[2]}-${newDate[1]}-${newDate[0]}`
     }
 
+
 }
