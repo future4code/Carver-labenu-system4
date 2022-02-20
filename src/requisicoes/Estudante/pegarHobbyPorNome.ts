@@ -1,7 +1,7 @@
-import connection from "../dados/connection"
-import { hobby } from "../interfaces/hobby"
+import connection from "../../dados/connection"
+import { hobby } from "../../interfaces/hobby"
 
-export const getHobby = async (hobby: string ): Promise<hobby[]> => {
+export const pegarHobbyPorNome = async (hobby: string): Promise<hobby[]> => {
 
     const result = await connection('Hobby')
         .select()

@@ -1,27 +1,20 @@
 import { Request, Response } from 'express'
-import connection from "../dados/connection"
-import { buscarDataNascFormatada } from '../funcoes/buscarData'
-import { getEstudantePorNome } from '../requisicoes/getEstudantePorNome'
-import { getHobbyById } from '../requisicoes/getHobbyById'
+import connection from "../../dados/connection"
+import { pegarEstudantePorNome } from '../../requisicoes/Estudante/pegarEstudantePorNome'
+import { pegarHobbyPorId } from '../../requisicoes/Estudante/pegarHobbyPorId'
+import { buscarDataNascFormatada } from '../../servicos/buscarDataNascFormatada'
 
-
-
-export const getStudents = async (req: Request, res: Response): Promise<void>=> {
-
-    
+export const pegarEstudante = async (req: Request, res: Response): Promise<void> => {
 
     let errorCode: number = 400
     const search = req.query.search as string
-    
-
 
     try {
 
-        
         if (search) {
-            const estudante = await getEstudantePorNome(search)
+            const estudante = await pegarEstudantePorNome(search)
 
-            if(estudante.length < 1){
+            if (estudante.length < 1) {
                 errorCode = 404
                 throw new Error("Estudante não localizado, por gentileza, verificar o nome e tentar buscar novamente")
             }
@@ -32,11 +25,11 @@ export const getStudents = async (req: Request, res: Response): Promise<void>=> 
         const estudante = await connection('Estudante').select()
 
         for (let i = 0; i < estudante.length; i++) {
-            estudante[i].hobby = await getHobbyById(estudante[i].id)
+            estudante[i].hobby = await pegarHobbyPorId(estudante[i].id)
         }
 
-        const estudantes = estudante.map((item) =>{
-            
+        const estudantes = estudante.map((item) => {
+
             return ({
                 id: item.id,
                 nome: item.nome,
@@ -44,7 +37,7 @@ export const getStudents = async (req: Request, res: Response): Promise<void>=> 
                 data_nasc: buscarDataNascFormatada(item.data_nasc),
                 turma_id: item.turma_id,
                 hobby: item.hobby
-                
+
             })
         })
         res.status(200).send({ estudantes })
