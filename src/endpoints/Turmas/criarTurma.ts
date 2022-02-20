@@ -3,25 +3,27 @@ import { Turma } from "../../classes/classeTurma";
 import connection from "../../dados/connection";
 import { geradorId } from "../../servicos/geradorId";
 
-export const createTurma = async (req: Request, res: Response): Promise<void> => {
+export const criarTurma = async (req: Request, res: Response): Promise<void> => {
 
     let errorCode: number = 400;
+    const nome: string = req.body.nome
+    const token = req.headers.authorization
+    const id = new geradorId().execute()
+    const modulo: string = '0'
 
     try {
 
-        const { nome, modulo }: { nome: string, modulo: string } = req.body
-        const id = new geradorId().execute()
-
-        if (modulo > "6") {
-            errorCode = 422
-            throw new Error("'modulo' só aceita numeros de 0-6")
+        if (!token) {
+            errorCode = 401
+            throw new Error("Para realizar essa operação é necessário ter token de autorização")
         }
 
-        const newTurma = new Turma(
-            id,
-            nome,
-            modulo
-        )
+        if (!nome) {
+            errorCode = 404
+            throw new Error("Para realizar o cadastro de uma nova turma é necessário informar o seguinte campos: nome")
+        }
+
+        const newTurma = new Turma(id, nome, modulo)
 
         await connection("Turma").insert({
             id,

@@ -1,5 +1,5 @@
 import { app } from "./app"
-import { createTurma } from "./endpoints/Turmas/criarTurma"
+import { criarTurma } from "./endpoints/Turmas/criarTurma"
 import { criarDocente } from "./endpoints/Docentes/criarDocente"
 import { mudarClasseEstudante } from "./endpoints/Estudantes/mudarClasseEstudante"
 import { buscarTurmasAtivas } from "./endpoints/Turmas/bucarTurmasAtivas"
@@ -12,8 +12,8 @@ import { pegarDocentes } from "./endpoints/Docentes/pegarDocente"
 
 app.get("/turma/ativas", buscarTurmasAtivas)
 app.get('/turma', pegarTodasTurmas)
-app.post("/turma", createTurma)
-app.put("/turma", mudarModuloTurma)
+app.post("/turma", criarTurma)
+app.put("/turma/:id", mudarModuloTurma)
 
 app.get("/estudante", pegarEstudante)
 app.post("/estudante", criarEstudante)

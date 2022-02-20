@@ -37,7 +37,7 @@ export const mudarClasseDocente = async (req: Request, res: Response): Promise<v
             throw new Error("Docente não encontrado, por gentileza informar um id válido")
         }
 
-        res.status(200).send("Turma alterada com sucesso!")
+        res.status(200).send()
 
     } catch (error: any) {
         res.status(errorCode).send({ message: error.message || error.sqlMessage })

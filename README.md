@@ -12,10 +12,13 @@
 - MySQL
 - Knex
 
-
 ### Documentação do Postaman
-
+https://documenter.getpostman.com/view/18384258/UVkjwy4v
 
 ### Documentação do Heroku
 
+### Nome dos integrantes:
+- Bruna
+- Juliana
+- Soraia
 
