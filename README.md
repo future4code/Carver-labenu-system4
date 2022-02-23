@@ -16,6 +16,7 @@
 https://documenter.getpostman.com/view/18384258/UVkjwy4v
 
 ### Documentação do Heroku
+https://projeto-labesystem.herokuapp.com/turma
 
 ### Nome dos integrantes:
 - Bruna
